@@ -1,6 +1,8 @@
 -- This script creates the admin user.
 -- You should run this MANUALLY in your Supabase SQL Editor.
--- IMPORTANT: Replace 'YOUR_SECURE_PASSWORD' with the actual password before running.
+
+-- Ensure the pgcrypto extension is available for password hashing.
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
 DO $$
 DECLARE
