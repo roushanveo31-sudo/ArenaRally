@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <a href="/dashboard/index.html" class="text-2xl font-bold text-yellow-400">Tournament Details</a>
+        <div>
+            <a href="/dashboard/index.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All Tournaments</a>
+            <a href="/dashboard/my-tournaments.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">My Tickets</a>
+            <button id="logout-btn" class="ml-4 bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors">
+                Logout
+            </button>
+        </div>
+    </nav>
+
+    <main class="p-8 max-w-7xl mx-auto">
+        <div id="loading">Loading details...</div>
+        <div id="access-denied" class="hidden text-center text-red-500">
+            <h2 class="text-2xl">Access Denied</h2>
+            <p>You must have a paid ticket to view this tournament's details.</p>
+        </div>
+
+        <div id="tournament-content" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Main Details -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Header -->
+                <div>
+                    <h2 id="tournament-title" class="text-4xl font-bold"></h2>
+                    <p id="tournament-time" class="text-gray-400 text-lg"></p>
+                </div>
+
+                <!-- Room Details -->
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4">Room Credentials</h3>
+                    <div id="room-details-placeholder" class="text-center text-gray-400">
+                        Room ID and Password will be revealed here before the tournament starts.
+                    </div>
+                    <div id="room-details-content" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300">Room ID</label>
+                            <p id="room-id" class="text-xl font-bold text-yellow-400 bg-gray-700 p-2 rounded"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300">Room Password</label>
+                            <p id="room-pass" class="text-xl font-bold text-yellow-400 bg-gray-700 p-2 rounded"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Winners List -->
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4">Winners</h3>
+                    <div id="winners-list">
+                        <!-- Winners will be listed here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Chat & Participants -->
+            <div class="space-y-6">
+                <!-- Tournament Chat -->
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg h-96 flex flex-col">
+                    <h3 class="text-xl font-bold mb-2">Tournament Chat</h3>
+                    <div id="chat-messages" class="flex-grow overflow-y-auto mb-2 p-2 bg-gray-700 rounded">
+                        <!-- Chat messages appear here -->
+                    </div>
+                    <form id="chat-form" class="flex">
+                        <input type="text" id="chat-input" class="w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-l-md focus:outline-none" placeholder="Type a message...">
+                        <button type="submit" class="bg-yellow-400 text-gray-900 font-semibold px-4 rounded-r-md">Send</button>
+                    </form>
+                </div>
+
+                <!-- Participants List -->
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-2">Participants</h3>
+                    <ul id="participants-list" class="space-y-2 max-h-60 overflow-y-auto">
+                        <!-- Participant names here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="/dashboard/tournament-details.js"></script>
+</body>
+</html>

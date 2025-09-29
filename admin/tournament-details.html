@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Tournament</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <a href="/admin/dashboard.html" class="text-2xl font-bold text-yellow-400">Admin Panel</a>
+        <button id="logout-btn" class="bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors">
+            Logout
+        </button>
+    </nav>
+
+    <main class="p-8 max-w-7xl mx-auto">
+        <div id="loading" class="text-center">Loading tournament details...</div>
+
+        <div id="tournament-content" class="hidden">
+            <!-- Tournament Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="tournament-title" class="text-4xl font-bold"></h2>
+                <span id="tournament-status" class="px-3 py-1 text-sm font-semibold rounded-full"></span>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column: Participants & Winners -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Participants List -->
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4">Participants (<span id="participant-count">0</span>)</h3>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-400">
+                                <thead class="text-xs text-gray-100 uppercase bg-gray-700">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Player Name</th>
+                                        <th scope="col" class="px-6 py-3">FF UID</th>
+                                        <th scope="col" class="px-6 py-3">Status</th>
+                                        <th scope="col" class="px-6 py-3">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="participants-list">
+                                    <!-- Participant rows here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Announce Winners -->
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4">Announce Winners</h3>
+                        <form id="winners-form" class="space-y-4">
+                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label for="winner-ff-uid" class="block text-sm mb-1">Winner's FF UID</label>
+                                    <input type="number" id="winner-ff-uid" class="w-full bg-gray-700 rounded-md border-gray-600">
+                                </div>
+                                <div>
+                                    <label for="winner-rank" class="block text-sm mb-1">Rank</label>
+                                    <input type="number" id="winner-rank" class="w-full bg-gray-700 rounded-md border-gray-600">
+                                </div>
+                                <div>
+                                    <label for="winner-kills" class="block text-sm mb-1">Kills</label>
+                                    <input type="number" id="winner-kills" class="w-full bg-gray-700 rounded-md border-gray-600">
+                                </div>
+                            </div>
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Announce Winner</button>
+                        </form>
+                        <div id="winners-list" class="mt-6">
+                            <!-- Announced winners will be listed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Room Details & Actions -->
+                <div class="space-y-8">
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4">Room Details</h3>
+                        <form id="room-details-form" class="space-y-4">
+                            <div>
+                                <label for="room_id" class="block mb-2 text-sm font-medium">Room ID</label>
+                                <input type="text" id="room_id" name="room_id" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md">
+                            </div>
+                            <div>
+                                <label for="room_pass" class="block mb-2 text-sm font-medium">Room Password</label>
+                                <input type="text" id="room_pass" name="room_pass" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md">
+                            </div>
+                            <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded">Publish Room Details</button>
+                        </form>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4">Actions</h3>
+                        <button id="edit-tournament-btn" class="w-full mb-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit Tournament</button>
+                        <button id="cancel-tournament-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel Tournament</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="message" class="mt-6 text-center"></div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <script type="module" src="/admin/tournament-details.js"></script>
+</body>
+</html>

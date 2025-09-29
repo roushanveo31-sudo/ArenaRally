@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-yellow-400">Admin Panel</h1>
+        <div>
+            <a href="/admin/create-tournament.html" class="bg-yellow-400 text-gray-900 font-semibold py-2 px-4 rounded hover:bg-yellow-500 transition-colors">
+                Create Tournament
+            </a>
+            <button id="logout-btn" class="ml-4 bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors">
+                Logout
+            </button>
+        </div>
+    </nav>
+
+    <main class="p-8">
+        <h2 class="text-3xl font-bold mb-6">All Tournaments</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-400">
+                <thead class="text-xs text-gray-100 uppercase bg-gray-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Title</th>
+                        <th scope="col" class="px-6 py-3">Status</th>
+                        <th scope="col" class="px-6 py-3">Mode</th>
+                        <th scope="col" class="px-6 py-3">Start Time</th>
+                        <th scope="col" class="px-6 py-3">Entry Fee</th>
+                        <th scope="col" class="px-6 py-3">Players</th>
+                        <th scope="col" class="px-6 py-3">
+                            <span class="sr-only">Edit</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="tournaments-list">
+                    <!-- Tournament rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <script type="module" src="/admin/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Tournament</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <a href="/admin/dashboard.html" class="text-2xl font-bold text-yellow-400">Admin Panel</a>
+        <button id="logout-btn" class="bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors">
+            Logout
+        </button>
+    </nav>
+
+    <main class="p-8 max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-6">Create New Tournament</h2>
+        <form id="create-tournament-form" class="space-y-6 bg-gray-800 p-8 rounded-lg">
+            <div>
+                <label for="title" class="block mb-2 text-sm font-medium text-gray-300">Tournament Title</label>
+                <input type="text" id="title" name="title" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+            </div>
+
+            <div>
+                <label for="thumbnail" class="block mb-2 text-sm font-medium text-gray-300">Tournament Thumbnail</label>
+                <input type="file" id="thumbnail" name="thumbnail" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-gray-900 hover:file:bg-yellow-500" required>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="mode" class="block mb-2 text-sm font-medium text-gray-300">Game Mode</label>
+                    <select id="mode" name="mode" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                        <option value="CS">Clash Squad (CS)</option>
+                        <option value="BR">Battle Royale (BR)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="subtype" class="block mb-2 text-sm font-medium text-gray-300">Subtype</label>
+                    <select id="subtype" name="subtype" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                        <!-- Options will be populated by JS based on mode -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="max_players" class="block mb-2 text-sm font-medium text-gray-300">Max Players</label>
+                    <input type="number" id="max_players" name="max_players" value="12" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+                </div>
+                <div>
+                    <label for="entry_fee" class="block mb-2 text-sm font-medium text-gray-300">Entry Fee (0 for free)</label>
+                    <input type="number" id="entry_fee" name="entry_fee" value="0" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+                </div>
+            </div>
+
+            <div>
+                <label for="start_time" class="block mb-2 text-sm font-medium text-gray-300">Start Time</label>
+                <input type="datetime-local" id="start_time" name="start_time" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+            </div>
+
+            <div>
+                <label for="prize_distribution" class="block mb-2 text-sm font-medium text-gray-300">Prize Distribution (JSON format)</label>
+                <textarea id="prize_distribution" name="prize_distribution" rows="3" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder='{ "1st": 500, "2nd": 250, "3rd": 100 }'></textarea>
+            </div>
+
+            <div>
+                <label for="rules" class="block mb-2 text-sm font-medium text-gray-300">Rules & Regulations</label>
+                <textarea id="rules" name="rules" rows="4" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Enter tournament rules here..."></textarea>
+            </div>
+
+            <div>
+                <label for="status" class="block mb-2 text-sm font-medium text-gray-300">Status</label>
+                <select id="status" name="status" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                    <option value="DRAFT">Draft</option>
+                    <option value="PUBLISHED">Published</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end space-x-4">
+                <button type="submit" class="px-6 py-2 font-semibold text-gray-900 bg-yellow-400 rounded-md hover:bg-yellow-500 transition-colors">Create Tournament</button>
+                <a href="/admin/dashboard.html" class="px-6 py-2 font-semibold text-white bg-gray-600 rounded-md hover:bg-gray-500 transition-colors">Cancel</a>
+            </div>
+        </form>
+        <div id="message" class="mt-4 text-center"></div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <script type="module" src="/admin/create-tournament.js"></script>
+</body>
+</html>

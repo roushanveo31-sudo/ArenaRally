@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tournaments</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <a href="/dashboard/index.html" class="text-2xl font-bold text-yellow-400">My Tournaments</a>
+        <div>
+            <a href="/dashboard/index.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All Tournaments</a>
+            <a href="/dashboard/profile.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+            <button id="logout-btn" class="ml-4 bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors">
+                Logout
+            </button>
+        </div>
+    </nav>
+
+    <main class="p-8">
+        <div class="space-y-12">
+            <!-- Upcoming Tournaments Section -->
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Upcoming Tournaments</h2>
+                <div id="upcoming-tournaments-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Upcoming tournament cards will be inserted here -->
+                    <div id="loading-upcoming" class="text-center col-span-full">Loading...</div>
+                </div>
+            </div>
+
+            <!-- Past Tournaments Section -->
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Past Tournaments</h2>
+                <div id="past-tournaments-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                     <!-- Past tournament cards will be inserted here -->
+                     <div id="loading-past" class="text-center col-span-full">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="/dashboard/my-tournaments.js"></script>
+</body>
+</html>

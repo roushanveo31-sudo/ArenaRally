@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <a href="/dashboard/index.html" class="text-2xl font-bold text-yellow-400">My Profile</a>
+        <div>
+            <a href="/dashboard/index.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All Tournaments</a>
+            <a href="/dashboard/my-tournaments.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">My Tickets</a>
+            <button id="logout-btn" class="ml-4 bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors">
+                Logout
+            </button>
+        </div>
+    </nav>
+
+    <main class="p-8 max-w-2xl mx-auto">
+        <div id="loading">Loading profile...</div>
+        <div id="profile-content" class="hidden bg-gray-800 p-8 rounded-lg shadow-lg space-y-6">
+            <h2 class="text-3xl font-bold mb-4">Profile Information</h2>
+
+            <form id="profile-form" class="space-y-4">
+                <div>
+                    <label for="ff-uid" class="block mb-2 text-sm font-medium">Free Fire UID</label>
+                    <input type="text" id="ff-uid" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md" disabled>
+                </div>
+                <div>
+                    <label for="mobile" class="block mb-2 text-sm font-medium">Mobile</label>
+                    <input type="text" id="mobile" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md" disabled>
+                </div>
+                <div>
+                    <label for="name" class="block mb-2 text-sm font-medium">Name</label>
+                    <input type="text" id="name" name="name" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md">
+                </div>
+                <button type="submit" class="w-full py-2 font-semibold text-gray-900 bg-yellow-400 rounded-md hover:bg-yellow-500 transition-colors">Update Profile</button>
+            </form>
+
+            <div class="border-t border-gray-700 pt-6">
+                <h3 class="text-2xl font-bold mb-4">Payout Information</h3>
+                <div class="flex items-center space-x-6">
+                    <div class="w-32 h-32 bg-gray-700 rounded-md flex items-center justify-center">
+                        <img id="qr-code-preview" src="" alt="UPI QR Code" class="object-contain max-w-full max-h-full">
+                    </div>
+                    <form id="qr-code-form">
+                        <label for="qr-code-upload" class="block mb-2 text-sm font-medium">Upload UPI QR Code</label>
+                        <input type="file" id="qr-code-upload" name="qr-code-upload" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-gray-900 hover:file:bg-yellow-500">
+                        <button type="submit" class="mt-4 px-4 py-2 font-semibold text-gray-900 bg-blue-500 rounded-md hover:bg-blue-600 transition-colors">Upload & Save</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="message" class="mt-4 text-center"></div>
+        </div>
+    </main>
+    <script type="module" src="/dashboard/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+/* Custom global styles can be added here */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    /* This is a good place for app-wide variables or base styles if needed */
+}
+
+/* Example of a custom component style */
+.countdown-timer {
+    font-variant-numeric: tabular-nums;
+}
