@@ -153,5 +153,9 @@ insert into storage.buckets (id, name, public) values ('qrcodes', 'qrcodes', fal
 create policy "Admins can upload thumbnails." on storage.objects for insert to authenticated with check ( bucket_id = 'thumbnails' AND (select id from public.admins where id = auth.uid()) is not null );
 create policy "Anyone can see thumbnails" on storage.objects for select using ( bucket_id = 'thumbnails' );
 
-create policy "Players can manage their own QR code." on storage.objects for all to authenticated with check ( bucket_id = 'qrcodes' AND owner = auth.uid() );
-create policy "Admins can see QR codes." on storage.objects for select to authenticated with check ( bucket_id = 'qrcodes' AND (select id from public.admins where id = auth.uid()) is not null );
+create policy "Players can view their own QR code." on storage.objects for select using ( bucket_id = 'qrcodes' AND owner = auth.uid() );
+create policy "Players can upload their own QR code." on storage.objects for insert with check ( bucket_id = 'qrcodes' AND owner = auth.uid() );
+create policy "Players can update their own QR code." on storage.objects for update using ( bucket_id = 'qrcodes' AND owner = auth.uid() );
+create policy "Players can delete their own QR code." on storage.objects for delete using ( bucket_id = 'qrcodes' AND owner = auth.uid() );
+
+create policy "Admins can see QR codes." on storage.objects for select using ( bucket_id = 'qrcodes' AND (select id from public.admins where id = auth.uid()) is not null );
