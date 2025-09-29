@@ -10,20 +10,23 @@ loginForm.addEventListener('submit', async (event) => {
     const identifier = event.target['login-identifier'].value;
     const password = event.target.password.value;
 
-    // Step 1: Find the user's mobile number from the 'players' table
-    // This is needed to construct the dummy email for Supabase Auth.
-    const { data: userProfile, error: profileError } = await supabase
+    let userMobile = null;
+
+    // Step 1: Find the user's mobile number to construct the email.
+    // We check the players table first.
+    const { data: playerData } = await supabase
         .from('players')
         .select('mobile')
         .or(`ff_uid.eq.${identifier},mobile.eq.${identifier}`)
         .single();
 
-    if (profileError || !userProfile) {
-        messageDiv.textContent = 'Invalid credentials. User not found.';
-        console.error('User lookup error:', profileError);
-        return;
+    if (playerData) {
+        userMobile = playerData.mobile;
+    } else if (identifier === '9142218328') {
+        // If no player is found, we check if the identifier is the admin's mobile.
+        // This allows the admin to log in even without a 'players' table entry.
+        userMobile = '9142218328';
     }
-    const userMobile = userProfile.mobile;
 
     if (!userMobile) {
         messageDiv.textContent = 'Invalid credentials. User not found.';
