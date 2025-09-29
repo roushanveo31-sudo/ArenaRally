@@ -52,23 +52,48 @@ You need to connect the frontend code to your Supabase instance.
     const supabaseKey = 'your-public-anon-key'; // <-- Replace this
     ```
 
-### 4. Create the Admin User
+### 4. Deploy the Admin Creation Function
 
-A special script is provided to create your admin account securely.
+To create an admin securely, we will use a Supabase Edge Function. This requires the **Supabase CLI**.
 
-1.  **Navigate to the SQL Editor**: Go back to the Supabase SQL Editor.
-2.  **Run the Admin Creation Script**:
-    *   Open the file `supabase/migrations/0002_create_admin.sql`.
-    *   Copy the entire content of the file.
-    *   Paste it into a new query in the Supabase SQL Editor.
-    *   **Important**: The script uses the password `Roushanchanda@7373` by default. You can change it directly in the script before running if you wish.
-    *   Click **RUN**.
+1.  **Install the Supabase CLI**: Follow the official instructions [here](https://supabase.com/docs/guides/cli/getting-started) to install the CLI on your machine.
 
-    This will create the admin user with `mobile: 9142218328` and the specified password. You can now log in with these credentials.
+2.  **Set Up Local Project**:
+    *   In your project's root directory, run `supabase login` and follow the prompts to authenticate.
+    *   Link your project by running `supabase link --project-ref <your-project-ref>`, replacing `<your-project-ref>` with your project's ID from the Supabase dashboard URL (e.g., `https://supabase.com/dashboard/project/<your-project-ref>`).
 
-### 5. Run the Application
+3.  **Set the Admin Secret Code**:
+    *   You need to set a secret code that will be used to authorize admin creation.
+    *   In your project's root directory, run the following command. **Replace `YOUR_SUPER_SECRET_CODE` with a strong, memorable code.**
+    ```bash
+    supabase secrets set ADMIN_SECRET_CODE=YOUR_SUPER_SECRET_CODE
+    ```
 
-You can run this project by serving the files with a simple local server. If you have Python installed, you can run:
+4.  **Deploy the Edge Function**:
+    *   Now, deploy the `create-admin-user` function to your Supabase project.
+    ```bash
+    supabase functions deploy create-admin-user --no-verify-jwt
+    ```
+    *   The `--no-verify-jwt` flag is used because this sign-up function needs to be called by unauthenticated users, but we are securing it with our secret code logic inside the function.
+
+### 5. Create Your Admin Account
+
+1.  **Run the Application**: You can run this project by serving the files with a simple local server. If you have Python installed, you can run:
+
+    ```bash
+    # From the root of the project directory
+    python3 -m http.server
+    ```
+    Then, open your browser and navigate to `http://localhost:8000`.
+
+2.  **Go to the Sign-up Page**: Navigate to the sign-up page (`/auth/signup.html`).
+3.  **Fill in Your Details**: Enter the details for your admin account (FF UID, Name, Mobile, Password).
+4.  **Enter the Secret Code**: In the **Admin Secret Code** field, enter the exact same secret code you set in the previous step.
+5.  **Sign Up**: Click the "Sign Up" button. Your account will be created with admin privileges. You can now log in.
+
+---
+
+### 6. Seeding Sample Data (Optional)
 
 ```bash
 # From the root of the project directory

@@ -5,7 +5,8 @@ const messageDiv = document.getElementById('message');
 
 signupForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    messageDiv.textContent = ''; // Clear previous messages
+    messageDiv.textContent = 'Processing...';
+    messageDiv.style.color = 'white';
 
     const form = event.target;
     const ff_uid = form['ff-uid'].value;
@@ -15,12 +16,27 @@ signupForm.addEventListener('submit', async (event) => {
     const player_type = form['player-type'].value;
     const ff_id_level = parseInt(form['ff-level'].value);
     const years_experience = parseInt(form.experience.value);
+    const adminSecret = form['admin-secret'].value.trim();
 
-    // Supabase Auth requires an email, so we create a dummy one.
-    // The user will log in with their mobile or ff_uid.
+    // If admin secret code is provided, use the Edge Function
+    if (adminSecret) {
+        const { data, error } = await supabase.functions.invoke('create-admin-user', {
+            body: { ff_uid, name, mobile, password, adminSecret },
+        });
+
+        if (error) {
+            messageDiv.textContent = `Admin creation failed: ${error.message}`;
+            messageDiv.style.color = 'red';
+        } else {
+            messageDiv.textContent = 'Admin account created successfully! Redirecting to login...';
+            messageDiv.style.color = 'green';
+            setTimeout(() => { window.location.href = '/auth/login.html'; }, 2000);
+        }
+        return;
+    }
+
+    // --- Standard Player Signup ---
     const email = `${mobile}@yourapp.com`;
-
-    // Step 1: Sign up the user in Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
@@ -28,41 +44,29 @@ signupForm.addEventListener('submit', async (event) => {
 
     if (authError) {
         messageDiv.textContent = `Error signing up: ${authError.message}`;
-        console.error('Auth Error:', authError);
+        messageDiv.style.color = 'red';
         return;
     }
-
     if (!authData.user) {
         messageDiv.textContent = 'Signup successful, but no user data returned. Please try logging in.';
         return;
     }
 
-    // Step 2: Insert the user's profile into the 'players' table
     const { error: profileError } = await supabase
         .from('players')
         .insert({
-            id: authData.user.id, // Link to the auth.users table
-            ff_uid,
-            name,
-            mobile,
-            player_type,
-            ff_id_level,
-            years_experience,
+            id: authData.user.id,
+            ff_uid, name, mobile, player_type, ff_id_level, years_experience,
         });
 
     if (profileError) {
         messageDiv.textContent = `Error creating profile: ${profileError.message}`;
-        console.error('Profile Error:', profileError);
-        // Optional: You might want to delete the user from auth if profile creation fails
-        // await supabase.auth.admin.deleteUser(authData.user.id);
+        messageDiv.style.color = 'red';
+        // Consider deleting the auth user if profile creation fails
         return;
     }
 
     messageDiv.textContent = 'Sign up successful! Redirecting to login...';
     messageDiv.style.color = 'green';
-
-    // Redirect to login page after a short delay
-    setTimeout(() => {
-        window.location.href = '/auth/login.html';
-    }, 2000);
+    setTimeout(() => { window.location.href = '/auth/login.html'; }, 2000);
 });
